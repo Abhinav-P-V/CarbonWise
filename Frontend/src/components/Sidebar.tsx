@@ -8,11 +8,22 @@ import {
   LogOut,
   Leaf
 } from 'lucide-react';
+import { useSetRecoilState } from 'recoil';
+import { UserAtom } from "../Atoms/userAtom"
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(UserAtom);
 
   const handleLogout = () => {
+    // Clear session storage
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+
+    // Reset the UserAtom state
+    setUser(null);  // Reset user to null in the atom
+  
+    // Redirect to home page or login page
     navigate('/');
   };
 
